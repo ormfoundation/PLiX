@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<!--
+	Neumont PLiX (Programming Language in XML) Code Generator
+
+	Copyright © Neumont University and Matthew Curland. All rights reserved.
+
+	The use and distribution terms for this software are covered by the
+	Common Public License 1.0 (http://opensource.org/licenses/cpl) which
+	can be found in the file CPL.txt at the root of this distribution.
+	By using this software in any fashion, you are agreeing to be bound by
+	the terms of this license.
+
+	You must not remove this notice, or any other, from this software.
+-->
+<xs:schema id="PLiXRedirect"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	targetNamespace="http://schemas.neumont.edu/CodeGeneration/PLiXRedirect"
+	xmlns="http://schemas.neumont.edu/CodeGeneration/PLiXRedirect"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	>
+	<xs:element name="redirectSourceFile">
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation>This file represents a redirection to a different source data file. Only the data is affected. The default transform name and all plix.xml settings are keyed off of this file name.</xs:documentation>
+			</xs:annotation>
+			<xs:attribute name="target" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the source file to load instead of this one. The specified path should be relative to the directory containing this file.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

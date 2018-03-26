@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Neumont PLiX (Programming Language in XML) Code Generator for Visual Studio
+
+	Copyright © Neumont University and Matthew Curland. All rights reserved.
+
+	The use and distribution terms for this software are covered by the
+	Common Public License 1.0 (http://opensource.org/licenses/cpl) which
+	can be found in the file CPL.txt at the root of this distribution.
+	By using this software in any fashion, you are agreeing to be bound by
+	the terms of this license.
+
+	You must not remove this notice, or any other, from this software.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+	<?include Config.wxi?>
+	<Fragment>
+		<ComponentGroup Id="MainFeatureComponents">
+			<ComponentRef Id="LicenseFilesComponent"/>
+		</ComponentGroup>
+		<ComponentGroup Id="FormattersComponents">
+			<!-- Formatters and schemas go here -->
+			<ComponentRef Id="PLIXFormatterSettings"/>
+			<ComponentRef Id="PLIXSchemasLocalCatalogComponent"/>
+			<ComponentRef Id="PLIXSchemasVSCatalogComponent2005"/>
+			<ComponentRef Id="PLIXSchemasVSCatalogComponent2008"/>
+			<ComponentRef Id="PLIXSchemasVSCatalogComponent2010"/>
+			<ComponentRef Id="PLIXSchemasComponent"/>
+			<ComponentRef Id="PLIXFormattersComponent"/>
+		</ComponentGroup>
+		<ComponentGroup Id="CustomToolComponents">
+			<!-- VS integration pieces go here -->
+			<ComponentRef Id="CustomToolComponent"/>
+			<ComponentRef Id="CustomToolComponent2005"/>
+			<ComponentRef Id="CustomToolComponent2008"/>
+			<ComponentRef Id="CustomToolComponent2010"/>
+			<ComponentRef Id="VBCustomToolComponent2005"/>
+			<ComponentRef Id="VBCustomToolComponent2008"/>
+			<ComponentRef Id="VBCustomToolComponent2010"/>
+			<ComponentRef Id="CSCustomToolComponent2005"/>
+			<ComponentRef Id="CSCustomToolComponent2008"/>
+			<ComponentRef Id="CSCustomToolComponent2010"/>
+			<ComponentRef Id="CustomToolComponentExp2005"/>
+			<ComponentRef Id="CustomToolComponentExp2008LM"/>
+			<ComponentRef Id="CustomToolComponentExp2008CU"/>
+			<ComponentRef Id="CustomToolComponentExp2010LM"/>
+			<ComponentRef Id="CustomToolComponentExp2010CU"/>
+			<ComponentRef Id="VBCustomToolComponentExp2005"/>
+			<ComponentRef Id="VBCustomToolComponentExp2008LM"/>
+			<ComponentRef Id="VBCustomToolComponentExp2008CU"/>
+			<ComponentRef Id="VBCustomToolComponentExp2010LM"/>
+			<ComponentRef Id="VBCustomToolComponentExp2010CU"/>
+			<ComponentRef Id="CSCustomToolComponentExp2005"/>
+			<ComponentRef Id="CSCustomToolComponentExp2008LM"/>
+			<ComponentRef Id="CSCustomToolComponentExp2008CU"/>
+			<ComponentRef Id="CSCustomToolComponentExp2010LM"/>
+			<ComponentRef Id="CSCustomToolComponentExp2010CU"/>
+		</ComponentGroup>
+		<ComponentGroup Id="PackageComponents">
+			<ComponentRef Id="PackageComponent2005"/>
+			<ComponentRef Id="PackageComponent2008"/>
+			<ComponentRef Id="PackageComponent2010"/>
+			<ComponentRef Id="PackageComponentExp2005"/>
+			<ComponentRef Id="PackageComponentExp2008LM"/>
+			<ComponentRef Id="PackageComponentExp2008CU"/>
+			<ComponentRef Id="PackageComponentExp2010LM"/>
+			<ComponentRef Id="PackageComponentExp2010CU"/>
+		</ComponentGroup>
+		<ComponentGroup Id="ReflectorComponents">
+			<ComponentRef Id="ReflectorAddinComponent"/>
+		</ComponentGroup>
+		<ComponentGroup Id="DocumentationComponents">
+			<ComponentRef Id="HTMLSchemaFilesComponent"/>
+		</ComponentGroup>
+	</Fragment>
+</Wix>

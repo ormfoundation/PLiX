@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Reflector Integration</title>
+</head>
+<body>
+<div>
+<h2>PLiX Language Add-in for Reflector</h2>
+<em>Reflector</em> refers to <a href="http://www.aisto.com/roeder/dotnet/">Lutz Roeder's .NET Reflector</a> tool, which is a common disassembler for .NET assemblies. Reflector lets you choose the output language you wish to view the disassembled code in. Your PLiX installation includes a Reflector add-in that enables you to view your disassembly in the PLiX language.<br /><br />
+Writing PLiX in an XML editor can be tedious, even with a schema aware XML editor using the PLiX.xsd file. In a large template, we've found that on average 5 lines of PLiX produce 1 line of C#, but individual complex statements can have a much higher PLiX/C# ratio. The size of the language is a result of the combination of the typically large size of XML files and the design goals of PLiX. The design allows for multi-language rendering, straightforward query and transformation of the generated code before the rendering stage, and fine-grained control over all portions of the code. Although entering PLiX by hand is straightforward, it was clearly not designed as a primary programming language. The long-term vision includes editors that let you code directly in your language of your choice while saving as PLiX in the backend. In the meantime, the Reflector plugin lets you program in your language of choice,
+	compile, and then view and copy the equivalent PLiX.
+<h3>Installation</h3>
+The Reflector product installs as two files, Reflector.exe and Reflector.cfg. These files can be placed anywhere on your system, so there is no reasonable way for the PLiX installer to automatically locate a Reflector installation and automatically install the add-in. After you have installed both Reflector and PLiX, you can take the following steps to add PLiX as an available language.
+<ol>
+<li>Launch Reflector.exe</li>
+<li>Open the Add-Ins dialog from the View menu</li>
+<li>Click the Add button and select <em>Reflector.PLiXLanguage.dll</em>, located in <em>C:\Program Files\Neumont\PLiX for Visual Studio\bin</em> for a default installation.</li>
+<li>You will see Reflector.PLiXLanguage list in the list of add-ins.</li>
+<li>Close the Add-Ins dialog.</li>
+<li>PLiX will be available in the language dropdown.</li>
+<li>If you want to see local variable names as displayed in your code you need to turn on 'Show PDB Symbols' in Reflector's View/Options dialog.</li>
+</ol>
+Note that if you want to build the PLiXReflector.sln solution you will need to place a copy of Reflector.exe in the Reflector directory.
+<h3>PLiX Language Rendering Options</h3>
+You will see a PLiX menu (right before the Help menu) when PLiX is selected as the current language. This menu allows you to select PLiX rendering options as follows:
+<ul>
+<li>The <em>Example Language</em> menu lists all languages currently loaded in Reflector, except for PLiX and IL, plus the special value <em>None</em>. The default value is C#. The PLiX language renderer adds an XML comment rendered by the selected example language for all top-level statements. The comment includes only lines at the current indentation level. This is a simple mechanism to keep comments at a reasonable length (you don't want to see the full contents of a loop listed both before the loop and inside the loop), but the results are language dependent. C#, Visual Basic, and MC++ example languages work well. The Pascal languages (Delphi and Chrome) are not as clean. For example, 'return x;' in C# renders inside a begin/end block in Pascal, and the PLiX example comment will show only the begin/end statements, not the contents. Refining the algorithm would require detailed knowledge of each language and is not planned. You can switch your current Reflector language to your example language at any time to see a full rendering in the target language.</li>
+<li>The <em>Expand Current Type Declaration</em> menu item expands all type members of the current selected type. This provides the same behavior as the 'Expand Methods' command offered in the code window by Reflector.</li>
+<li>The <em>Expand Current Namespace Declaration</em> menu item expands all members of the current selected namespace. <em>Warning</em> use with caution, this can be very slow and is provided for rapid copy of a large block of code.</li>
+<li>The <em>Expand All Type Declarations</em> menu item automatically automatically expands type members when a type is selected. The Reflector-provided Expand/Collapse commands are ignore if this is set. Note that namespace expansion is never automatic.</li>
+<li>The <em>Display Context Type Qualifier</em> menu item adds the dataTypeQualifier attribute for all type references to elements in the namespace of the currently selected item. By default these qualifiers are not displayed.</li>
+<li>The <em>Static Call Options</em> menu sets rendering options for static calls to the context type or base types. The <em>Explicit</em> choice always renders static calls as a &lt;plx:callStatic&gt; elements, the <em>Implicit (Current Type)</em> option replaces the callStatic elements with &lt;plx:callThis accessor="static"&gt; elements if the called type is the same as the declaring type of the calling code, and the <em>Implicit (Base Types)</em> option uses the &lt;callThis accessor="static"&gt; output for the current type and any of its base types. Explicit qualification is used by default. The implicit options, combined with the <em>Display Context Type Qualifier</em> settings, can drastically reduce the number of references to the current type in the relfected PLiX xml, making it easier to use in generators that dynamically set the class name.</li>
+</ul>
+<br />
+<h3>Notes on Rendering</h3>
+Reflector is a much appreciated tool and has a number of very nice features. For example, Reflector does not lock down the assemblies it is browsing, so you can rebuild your assembly while browsing it in Reflector. The Reflector extensibility model is also indispensable for tools such as this one. However, Reflector has no ability to account for unsupported language constructs.<br /><br />
+Reflector makes the assumption that all statements and expressions can be rendered natively by all languages. PLiX rendering does not make this assumption and allows individual language formatters to smooth out language differences. Let's look at different representations of the C# statement <em>object z = (x != null) ? x.y : null;</em> (assume x is a local variable and y is a property with object type).
+<pre>//C# (Reflector rendered)
+object z = (x != null) ? x.y : null;
+
+'Visual Basic (Reflector rendered)
+Dim z As Object = IIf((Not x Is Nothing), x.y, Nothing)
+
+&lt;!-- PLiX (Reflector rendered) --&gt;
+&lt;plx:local name="z" dataTypeName=".object"&gt;
+    &lt;plx:initialize&gt;
+        &lt;plx:inlineStatement dataTypeName=".object"&gt;
+            &lt;plx:conditionalOperator&gt;
+                &lt;plx:condition&gt;
+                    &lt;plx:binaryOperator type="identityInequality"&gt;
+                        &lt;plx:left&gt;
+                            &lt;plx:nameRef name="x"/&gt;
+                        &lt;/plx:left&gt;
+                        &lt;plx:right&gt;
+                            &lt;plx:nullKeyword/&gt;
+                        &lt;/plx:right&gt;
+                    &lt;/plx:binaryOperator&gt;
+                &lt;/plx:condition&gt;
+                &lt;plx:left&gt;
+                    &lt;plx:callInstance name="y" type="property"&gt;
+                        &lt;plx:callObject&gt;
+                            &lt;plx:nameRef name="x"/&gt;
+                        &lt;/plx:callObject&gt;
+                    &lt;/plx:callInstance&gt;
+                &lt;/plx:left&gt;
+                &lt;plx:right&gt;
+                      &lt;plx:nullKeyword/&gt;
+                &lt;/plx:right&gt;
+            &lt;/plx:conditionalOperator&gt;
+        &lt;/plx:inlineStatement&gt;
+    &lt;/plx:initialize&gt;
+&lt;/plx:local&gt;
+
+//C# (PLiX rendered)
+object z = x != null ? x.y : null;
+
+'Visual Basic (PLiX rendered)
+Dim PLiXVB_1ex As Object
+If x IsNot Nothing Then
+    PLiXVB_1ex = x.y
+Else
+    PLiXVB_1ex = Nothing
+End If
+Dim z As Object = PLiXVB_1ex
+</pre>
+<br />Reflector's Visual Basic rendering has two major mistakes. First, the Is operator has higher precedence than the Not operator. Second, IIf is a function (not an operator) and does not short circuit, so the x.y will always evaluate and throws a NullReferenceException if x is not set. Also note that PLiX-generated C# is aware of operator precedence and omits the unneeded parentheses in the C# code.<br /><br />
+<h3>UNDONE: Reflector add-in</h3>
+The reflector plugin is pretty good, but not yet perfect. The following work items are not done (this is not necessarily a complete list).
+<ul>
+<li>Unresolved types are not handled. If Reflector requests a type and you cancel the dialog then PLiX rendering will crash. Note that the 'Automatically resolve assemblies' option (choose View/Options and select the 'Browse' item) will greatly reduce the number of dialogs you see.</li>
+</ul>
+<strong>Important:</strong> If you get a crash report from Reflector with the PLiX language active, first try the same selection with another language. If you still get the crash, report it to Lutz. If not, report it here.
+</div>
+</body>
+</html>
