@@ -1,0 +1,8 @@
+Project Build Order
+	** Do not build any project via Visual Studio, instead these must be built via the .bat files
+	CodeGen.sln
+	PLiXReflector.sln
+	Setup\Setup.sln
+	
+Current Upgrade 2010 -> 2017
+	
