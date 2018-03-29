@@ -4,9 +4,10 @@ setlocal
 :: TargetVisualStudioNumericVersion settings:
 ::   8.0 = Visual Studio 2005 (Code Name "Whidbey")
 ::   9.0 = Visual Studio 2008 (Code Name "Orcas")
-::  10.0 = Visual Studio 2010 (Code Name "Rosario")
+::   10.0 = Visual Studio 2010 (Code Name "Rosario")
+::   15.0 = Visual Studio 2017
 IF NOT DEFINED TargetVisualStudioNumericVersion (
-	SET TargetVisualStudioNumericVersion=8.0
+	SET TargetVisualStudioNumericVersion=15.0
 )
 
 IF "%ProgramFiles(X86)%"=="" (
@@ -18,25 +19,68 @@ IF "%ProgramFiles(X86)%"=="" (
 )
 
 if '%1'=='' (
-set rootPath=%~dp0
+	set rootPath=%~dp0
 ) else (
-set rootPath=%~dp1
+	set rootPath=%~dp1
 )
 if '%2'=='' (
-set outDir=bin\Debug\
+	set outDir=bin\Debug\
 ) else (
-set outDir=%~2
+	set outDir=%~2
 )
-if '%3'=='' (
-set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio 8\
-) else (
-set envPath=%~3
-)
+REM set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio 8\
+:: Can't use '(' due to the x86 in program files...
+if '%3'=='' set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\2017\Community\ else set envPath=%~3
 
 SET VSRegistryRootBase=SOFTWARE%WOWRegistryAdjust%\Microsoft\VisualStudio
 SET VSRegistryRootVersion=%TargetVisualStudioNumericVersion%
-FOR /F "usebackq skip=2 tokens=2*" %%A IN (`REG QUERY "HKLM\%VSRegistryRootBase%\VSIP\%VSRegistryRootVersion%" /v "InstallDir"`) DO SET VSIPDir=%%~fB
-IF "%TargetVisualStudioNumericVersion%"=="9.0" (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\VS2005\) ELSE (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\)
+
+:: PRE VS 15
+REM FOR /F "usebackq skip=2 tokens=2*" %%A IN (`REG QUERY "HKLM\%VSRegistryRootBase%\VSIP\%VSRegistryRootVersion%" /v "InstallDir"`) DO SET VSIPDir=%%~fB
+REM IF "%TargetVisualStudioNumericVersion%"=="9.0" (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\VS2005\) ELSE (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\)
+:: VS 15
+SET VSWhereLocation=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+	SET VSInstallDir=%%i
+)
+SET VSIPDir=%VSInstallDir%\VSSDK\
+SET vsipbin=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\
+
+:: Make sure assemblies are in the gac
+IF "%TargetVisualStudioNumericVersion%"=="15.0" (
+	gacutil.exe /l "Microsoft.VisualStudio.Shell.Framework, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Framework.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.OLE.Interop.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Interop.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Interop.8.0.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Interop.9.0.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.Shell.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSIPDir%VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.15.0.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextManager.Interop.dll"
+	)
+	gacutil.exe /l "Microsoft.VisualStudio.Utilities, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
+	IF NOT ERRORLEVEL 1 (
+		gacutil.exe /nologo /f /i "%VSIPDir%VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Utilities.dll"
+	)
+)
 
 set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\bin\
 set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\Help\
@@ -79,6 +123,8 @@ if exist "%plixBinaries%%plixTool%.pdb" (
 del "%plixBinaries%%plixTool%.pdb"
 )
 )
+REM xcopy /Y /D /Q "%rootPath%%outDir%*.dll" "%plixBinaries%"
+REM xcopy /Y /D /Q "%rootPath%%outDir%*.pdb" "%plixBinaries%"
 
 xcopy /Y /D /Q "%rootPath%PlixXsd.html" "%plixHelp%"
 xcopy /Y /D /Q "%rootPath%PlixLoaderXsd.html" "%plixHelp%"
