@@ -5,6 +5,7 @@
 *Version.bat
 *Version.cs
 *Version.wxi
+CodeGenCustomTool/CtcComponents/PliXPackage.cto
 
 # User-specific files
 *.suo
