@@ -1,7 +1,7 @@
 ﻿/**************************************************************************\
 * Neumont PLiX (Programming Language in XML) Code Generator                *
 *                                                                          *
-* Copyright © Neumont University and Matthew Curland. All rights reserved. *
+* Copyright © Neumont University, Matthew Curland, and The ORM Foundation. All rights reserved. *
 *                                                                          *
 * The use and distribution terms for this software are covered by the      *
 * Common Public License 1.0 (http://opensource.org/licenses/cpl) which     *
@@ -22,7 +22,7 @@ using System.Resources;
 [assembly: AssemblyProduct("Neumont PLiX (Programming Language in XML) Code Generator")]
 [assembly: AssemblyDescription("Neumont PLiX (Programming Language in XML) Code Generator - Reflector Plugin")]
 [assembly: AssemblyCompany("Neumont University")]
-[assembly: AssemblyCopyright("Copyright © Neumont University and Matthew Curland. All rights reserved.")]
+[assembly: AssemblyCopyright("Copyright © Neumont University, Matthew Curland, and The ORM Foundation. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en-US")]
