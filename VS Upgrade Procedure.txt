@@ -1,8 +1,12 @@
 Project Build Order
 	** Do not build any project via Visual Studio, instead these must be built via the .bat files
 	CodeGen.sln
+		CodeGenCustomTool\CodeGenCustomTool.csproj
 	PLiXReflector.sln
+		Reflector\PLiXReflector.csproj
 	Setup\Setup.sln
 	
 Current Upgrade 2010 -> 2017
-	
+	1) Update BuildAll.batt for VS 2015
+	2) Update CodeGenCustomTool\Ctc\Commponents\UpdateCTO.bat for VS 2015
+	3) Update CodeGenCustomTool\CodeGenCustomTool.csproj references
