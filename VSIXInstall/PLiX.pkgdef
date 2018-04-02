@@ -1,0 +1,31 @@
+Windows Registry Editor Version 5.00
+
+[$RootKey$\InstalledProducts\Neumont PLiX Code Generator]
+"Package"="{bc129a03-26c4-4667-8e12-96225b2d3cd2}"
+"UseRegNameAsSplashName"=dword:00000001
+"UseInterface"=dword:00000001
+[$RootKey$\Packages\{bc129a03-26c4-4667-8e12-96225b2d3cd2}]
+@="PlixPackage"
+"InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
+"Class"="Neumont.Tools.CodeGeneration.Plix.Shell.PlixPackage"
+"CodeBase"="$PackageFolder$\Neumont.Tools.CodeGeneration.PLiX.dll"
+[$RootKey$\Packages\{bc129a03-26c4-4667-8e12-96225b2d3cd2}]
+"ID"=dword:00000096
+"MinEdition"="Standard"
+"ProductVersion"="1.0"
+"ProductName"="Neumont PLiX Tools for Visual Studio"
+"CompanyName"="Neumont University"
+[$RootKey$\Menus]
+"{bc129a03-26c4-4667-8e12-96225b2d3cd2}"=", 1000, 1"
+[$RootKey$\UserSettings\ProgrammingLanguageInXml_SnippetPreviewWindow]
+@="116"
+"Package"="{bc129a03-26c4-4667-8e12-96225b2d3cd2}"
+"Category"="{3c59d6f9-6c1a-42e4-bae4-26cc5a944edf}"
+"Description"="118"
+"VSSettingsMigration"=dword:00000000
+[$RootKey$\ToolWindows\{976d6fa2-8d5a-4edf-b5b5-1edfcaeeb841}]
+@="{bc129a03-26c4-4667-8e12-96225b2d3cd2}"
+"Name"="Neumont.Tools.CodeGeneration.Plix.Shell.PlixPackage+SnippetPreviewWindow"
+"Orientation"="Right"
+"Style"="Tabbed"
+"Window"="{34E76E81-EE4A-11D0-AE2E-00A0C90FFFC3}"

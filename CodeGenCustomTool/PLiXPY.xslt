@@ -2,7 +2,7 @@
 <!--
 	Neumont PLiX (Programming Language in XML) Code Generator
 
-	Copyright © Neumont University, Matthew Curland, and Brian Christensen. All rights reserved.
+	Copyright © Neumont University, Matthew Curland, Brian Christensen, and The ORM Foundation. All rights reserved.
 
 	The use and distribution terms for this software are covered by the
 	Common Public License 1.0 (http://opensource.org/licenses/cpl) which

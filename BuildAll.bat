@@ -23,4 +23,4 @@ REM MSBuild.exe /nologo "%RootDir%\Setup\Setup.sln" %*
 :: VS 15.0
 MSBuild.exe /nologo "%RootDir%\CodeGen.sln" %* /toolsversion:15.0
 REM MSBuild.exe /nologo "%RootDir%\PLiXReflector.sln" %* /toolsversion:15.0
-REM MSBuild.exe /nologo "%RootDir%\Setup\Setup.sln" %* /toolsversion:15.0
+MSBuild.exe /nologo "%RootDir%\Setup\Setup.sln" %* /toolsversion:15.0
