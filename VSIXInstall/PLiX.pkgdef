@@ -8,7 +8,9 @@ Windows Registry Editor Version 5.00
 @="PlixPackage"
 "InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
 "Class"="Neumont.Tools.CodeGeneration.Plix.Shell.PlixPackage"
-"CodeBase"="$PackageFolder$\Neumont.Tools.CodeGeneration.PLiX.dll"
+"CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
+"ProductName"="Neumont PLiX Tools for Visual Studio"
+"CompanyName"="Neumont University"
 [$RootKey$\Packages\{bc129a03-26c4-4667-8e12-96225b2d3cd2}]
 "ID"=dword:00000096
 "MinEdition"="Standard"
@@ -29,3 +31,24 @@ Windows Registry Editor Version 5.00
 "Orientation"="Right"
 "Style"="Tabbed"
 "Window"="{34E76E81-EE4A-11D0-AE2E-00A0C90FFFC3}"
+
+// Register the PLiX Custom Tool
+[$RootKey$\CLSID\{12F1FC1E-20A6-4286-9C43-25209BBA5997}]
+@="Neumont.Tools.CodeGeneration.Plix.PlixLoaderCustomTool"
+"InprocServer32"="$WinDir$\SYSTEM32\mscoree.dll"
+"ThreadingModel"="Both"
+"Class"="Neumont.Tools.CodeGeneration.Plix.PlixLoaderCustomTool"
+"Assembly"="Neumont.Tools.CodeGeneration.PLiX, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7a0c83ac6f8a469f"
+"CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
+
+// Register C# Generator
+[$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\NUPlixLoader]
+@="Neumont C# PLiX Loader"
+"CLSID" Value="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
+"GeneratesDesignTimeSource"=dword:00000001
+
+// Register VB Generator
+[$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\NUPlixLoader]
+@="Neumont VB PLiX Loader"
+"CLSID" Value="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
+"GeneratesDesignTimeSource"=dword:00000001

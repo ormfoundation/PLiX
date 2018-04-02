@@ -2,7 +2,7 @@
 /**************************************************************************\
 * Neumont Object-Role Modeling Architect for Visual Studio                 *
 *                                                                          *
-* Copyright © Neumont University and The ORM Foundation. All rights reserved.                     *
+* Copyright © Neumont University. All rights reserved.                     *
 *                                                                          *
 * The use and distribution terms for this software are covered by the      *
 * Common Public License 1.0 (http://opensource.org/licenses/cpl) which     *
@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Neumont.Tools.ORM.SDK
 {
-	internal partial class VersionGenerator
+	internal static partial class VersionGenerator
 	{
 		private static class Config
 		{
@@ -30,6 +30,8 @@ namespace Neumont.Tools.ORM.SDK
 			public static readonly DateTime ReleaseYearMonth = DateTime.ParseExact(ConfigurationManager.AppSettings["ReleaseYearMonth"], "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault);
 			public static readonly string ReleaseType = ConfigurationManager.AppSettings["ReleaseType"];
 			public static readonly DateTime RevisionStartYearMonth = DateTime.ParseExact(ConfigurationManager.AppSettings["RevisionStartYearMonth"], "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault);
+			private static readonly string CountQuartersFromYearMonthString = ConfigurationManager.AppSettings["CountQuartersFromYearMonth"];
+			public static readonly DateTime CountQuartersFromYearMonth = string.IsNullOrEmpty(CountQuartersFromYearMonthString) ? DateTime.Today.AddYears(1) : DateTime.ParseExact(CountQuartersFromYearMonthString, "yyyy-MM", CultureInfo.InvariantCulture, DateTimeStyles.NoCurrentDateDefault);
 		}
 	}
 }

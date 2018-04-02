@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+	Neumont PLiX (Programming Language in XML) Code Generator for Visual Studio
+
+	Copyright © Neumont University, Matthew Curland, and The ORM Foundation. All rights reserved.
+
+	The use and distribution terms for this software are covered by the
+	Common Public License 1.0 (http://opensource.org/licenses/cpl) which
+	can be found in the file CPL.txt at the root of this distribution.
+	By using this software in any fashion, you are agreeing to be bound by
+	the terms of this license.
+
+	You must not remove this notice, or any other, from this software.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<!-- NOTE: All comments and instructions in this file are specifically for NORMA setup, and do not necessarily apply to setup packages in general. -->
+	<?include Config.wxi?>
+	
+	<Product
+		Name="!(loc.ProductName)"
+		Manufacturer="!(loc.Manufacturer)"
+		Language="$(var.DefaultLCID)"
+		Version="$(var.ProductVersion)"
+		Id="$(var.ProductCode)"
+		UpgradeCode="$(var.UpgradeCode)">
+
+		<Package
+			Id="$(var.PackageCode)"
+			Description="!(loc.ProductName) - !(loc.ReleaseVersion)"
+			Comments="!(loc.PackageCommentsPrefix)!(loc.ProductName)!(loc.PackageCommentsSuffix)"
+			Manufacturer="!(loc.Manufacturer)"
+			InstallerVersion="300"
+			Compressed="yes"
+			ShortNames="no"
+			InstallPrivileges="elevated"/>
+
+		<Upgrade Id="$(var.UpgradeCode)">
+			<UpgradeVersion Minimum="0.0.0" Maximum="$(var.ProductVersion)" IncludeMinimum="yes" MigrateFeatures="yes" Property="UPGRADEPRODUCTCODES"/>
+		</Upgrade>
+
+		<Condition Message="!(loc.Windows2000OrHigherRequired)">VersionNT >= 500</Condition>
+
+    <Binary Id="Setup.CustomActions.dll" SourceFile="Setup.CustomActions\bin\$(var.BuildConfiguration)\Setup.CustomActions.CA.dll" />
+    <CustomAction Id="DetermineVsInstallPaths" Execute="firstSequence" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />
+
+    <Condition Message="!(loc.VisualStudioRequired)">VSPRODUCTDIR_Community OR VSPRODUCTDIR_Professional OR VSPRODUCTDIR_Enterprise OR Installed</Condition>
+    
+		<!-- Only support per-machine installation. -->
+		<Property Id="ALLUSERS">1</Property>
+		
+		<!-- Setup Add/Remove Programs functionality. -->
+		<Property Id="ARPCONTACT">!(loc.Manufacturer)</Property>
+		<Property Id="ARPPRODUCTICON">AboutBox.ico</Property>
+		
+		<Icon Id="AboutBox.ico" SourceFile="..\CodeGenCustomTool\AboutBox.ico" />
+		
+		<Media Id="1" Cabinet="PLIX_VS.cab" EmbedCab="yes" CompressionLevel="high" />
+
+		<FeatureRef Id="MainFeature" />
+		<DirectoryRef Id="TARGETDIR" />
+
+		<Property Id="ADMINORADVERTISED">!(loc.AdminOrAdvertised)</Property>
+		<CustomAction Id="AdminOrAdvertisedCustomAction" Return="check" Error="[ADMINORADVERTISED]"/>
+		<AdminExecuteSequence>
+			<Custom Before="CostInitialize" Action="AdminOrAdvertisedCustomAction"/>
+		</AdminExecuteSequence>
+		<AdvertiseExecuteSequence>
+			<Custom Before="CostInitialize" Action="AdminOrAdvertisedCustomAction"/>
+		</AdvertiseExecuteSequence>
+
+		<InstallExecuteSequence>
+      <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
+			<RemoveExistingProducts Before="InstallInitialize"/>
+		</InstallExecuteSequence>
+    <InstallUISequence>
+      <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
+    </InstallUISequence>
+	</Product>
+</Wix>

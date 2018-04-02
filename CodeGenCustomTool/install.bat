@@ -45,6 +45,7 @@ FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -req
 )
 SET VSIPDir=%VSInstallDir%\VSSDK\
 SET vsipbin=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\
+SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\15.0_3ebc2e4bExp\Extensions\ORM Solutions\PLiX\1.0
 
 :: Make sure assemblies are in the gac
 IF "%TargetVisualStudioNumericVersion%"=="15.0" (
@@ -148,6 +149,16 @@ ECHO F | xcopy /Y /D /Q "%rootPath%..\Setup\PLiXSchemaCatalog.xml" "%envPath%Xml
 
 CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%"
 CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%Exp"
+
+:: Install the extension
+IF "%TargetVisualStudioNumericVersion%"=="15.0" (
+	IF NOT EXIST "%VSIXInstallDir%" (MKDIR "%VSIXInstallDir%")
+	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\extension.vsixmanifest" "%VSIXInstallDir%\"
+	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\PLiX.pkgdef" "%VSIXInstallDir%\"
+	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\Package.ico" "%VSIXInstallDir%\"
+	XCOPY /Y /D /V /Q "%rootPath%..\LICENSE.txt" "%VSIXInstallDir%\"
+	REG ADD HKLM\%VSRegistryRootBase%\%VSRegistryRootVersion%Exp\ExtensionManager\EnabledExtensions /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
+)
 GOTO:EOF
 
 :_InstallCustomTool
