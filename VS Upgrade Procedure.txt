@@ -2,11 +2,19 @@ Project Build Order
 	** Do not build any project via Visual Studio, instead these must be built via the .bat files
 	CodeGen.sln
 		CodeGenCustomTool\CodeGenCustomTool.csproj
-	PLiXReflector.sln
+	PLiXReflector.sln - ignoring
 		Reflector\PLiXReflector.csproj
 	Setup\Setup.sln
 	
 Current Upgrade 2010 -> 2017
-	1) Update BuildAll.batt for VS 2015
+	1) Update BuildAll.bat for VS 2015
 	2) Update CodeGenCustomTool\Ctc\Commponents\UpdateCTO.bat for VS 2015
 	3) Update CodeGenCustomTool\CodeGenCustomTool.csproj references
+	4) Update CodeGenCustomTool\Install.bat for VS 2015
+	
+	*** Ignoreing the Reflector Add-in since Reflector is now a paid product
+
+	5) Added VSIXInstall based off the NORMA one
+	6) Created a new Setup project for 2017 using WIX
+	
+	) Updated Copyright Notices to include The ORM Foundation.
