@@ -99,7 +99,7 @@
 				  <Directory Id="VSXMLSCHEMASDIR_Community" Name="Schemas">
             <!-- Point Visual Studio to additional XML Schema Catalog directories. -->
 						<Component Id="PLIXSchemasVSCatalogComponent_Community" Guid="AA556786-3CF4-4BB4-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-							<Condition>VSPRODUCTDIR_Community OR Installed</Condition> 
+							<Condition>VSPRODUCTDIREXISTS_Community OR Installed</Condition> 
 							<File Id="PLIXSchemaCatalog_Community.xml_Community" Name="PLiXSchemaCatalog.xml" Source="PLiXSchemaCatalog.xml"
 								DefaultLanguage="0" CompanionFile="PLIXSettings.xml"/>
 						</Component>
@@ -108,16 +108,16 @@
         <Directory Id="VSCOMMON7_Community" Name="Common7">
           <Directory Id="VSIDE_Community" Name="IDE">
             <Directory Id="VSEXTENSIONSDIR_Community" Name="Extensions">
-              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Community" Name="ORM Solutions">
+              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Community" Name="Neumont">
                 <Directory Id="NORMAEXTENSIONSDIR_Community" Name="PLiX for Visual Studio">
                   <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Community" Name="$(var.MajorMinorVersion)">
                     <Component Id="VSIXExtensionComponent_Community" Guid="E370803B-61FE-453C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-                      <Condition>VSPRODUCTDIR_Community</Condition>
+                      <Condition>VSPRODUCTDIREXISTS_Community</Condition>
                       <File Id="VSIXManifest_Community" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\extension.vsixmanifest"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="PackageDef_Community" ShortName="Designer.def" Name="ORMDesigner.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
+                      <File Id="PackageDef_Community" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="VSIXIcon_Community" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\Package.ico"
+                      <File Id="VSIXIcon_Community" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\Package.ico"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
                       <File Id="VSIXLicense_Community" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
@@ -135,7 +135,7 @@
 				  <Directory Id="VSXMLSCHEMASDIR_Professional" Name="Schemas">
             <!-- Point Visual Studio to additional XML Schema Catalog directories. -->
 						<Component Id="PLIXSchemasVSCatalogComponent_Professional" Guid="0BF592B0-38D3-427B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-							<Condition>VSPRODUCTDIR_Professional OR Installed</Condition> 
+							<Condition>VSPRODUCTDIREXISTS_Professional OR Installed</Condition> 
 							<File Id="PLIXSchemaCatalog_Professional.xml_Professional" Name="PLiXSchemaCatalog.xml" Source="PLiXSchemaCatalog.xml"
 								DefaultLanguage="0" CompanionFile="PLIXSettings.xml"/>
 						</Component>
@@ -144,16 +144,16 @@
         <Directory Id="VSCOMMON7_Professional" Name="Common7">
           <Directory Id="VSIDE_Professional" Name="IDE">
             <Directory Id="VSEXTENSIONSDIR_Professional" Name="Extensions">
-              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Professional" Name="ORM Solutions">
+              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Professional" Name="Neumont">
                 <Directory Id="NORMAEXTENSIONSDIR_Professional" Name="PLiX for Visual Studio">
                   <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Professional" Name="$(var.MajorMinorVersion)">
                     <Component Id="VSIXExtensionComponent_Professional" Guid="BA21CD30-1127-42CA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-                      <Condition>VSPRODUCTDIR_Professional</Condition>
+                      <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
                       <File Id="VSIXManifest_Professional" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\extension.vsixmanifest"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="PackageDef_Professional" ShortName="Designer.def" Name="ORMDesigner.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
+                      <File Id="PackageDef_Professional" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="VSIXIcon_Professional" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\Package.ico"
+                      <File Id="VSIXIcon_Professional" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\Package.ico"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
                       <File Id="VSIXLicense_Professional" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
@@ -171,7 +171,7 @@
 				  <Directory Id="VSXMLSCHEMASDIR_Enterprise" Name="Schemas">
             <!-- Point Visual Studio to additional XML Schema Catalog directories. -->
 						<Component Id="PLIXSchemasVSCatalogComponent_Enterprise" Guid="4F6D76AE-7B14-43D5-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-							<Condition>VSPRODUCTDIR_Enterprise OR Installed</Condition> 
+							<Condition>VSPRODUCTDIREXISTS_Enterprise OR Installed</Condition> 
 							<File Id="PLIXSchemaCatalog_Enterprise.xml_Enterprise" Name="PLiXSchemaCatalog.xml" Source="PLiXSchemaCatalog.xml"
 								DefaultLanguage="0" CompanionFile="PLIXSettings.xml"/>
 						</Component>
@@ -180,16 +180,16 @@
         <Directory Id="VSCOMMON7_Enterprise" Name="Common7">
           <Directory Id="VSIDE_Enterprise" Name="IDE">
             <Directory Id="VSEXTENSIONSDIR_Enterprise" Name="Extensions">
-              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Enterprise" Name="ORM Solutions">
+              <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Enterprise" Name="Neumont">
                 <Directory Id="NORMAEXTENSIONSDIR_Enterprise" Name="PLiX for Visual Studio">
                   <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Enterprise" Name="$(var.MajorMinorVersion)">
                     <Component Id="VSIXExtensionComponent_Enterprise" Guid="2BED8F0E-4752-4A49-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-                      <Condition>VSPRODUCTDIR_Enterprise</Condition>
+                      <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
                       <File Id="VSIXManifest_Enterprise" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\extension.vsixmanifest"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="PackageDef_Enterprise" ShortName="Designer.def" Name="ORMDesigner.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
+                      <File Id="PackageDef_Enterprise" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="VSIXIcon_Enterprise" ShortName="DsgnrIco.png" Name="ORMDesignerIcon.png" Source="..\VSIXInstall\Package.ico"
+                      <File Id="VSIXIcon_Enterprise" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\Package.ico"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
                       <File Id="VSIXLicense_Enterprise" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>

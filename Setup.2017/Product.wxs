@@ -41,9 +41,13 @@
 		<Condition Message="!(loc.Windows2000OrHigherRequired)">VersionNT >= 500</Condition>
 
     <Binary Id="Setup.CustomActions.dll" SourceFile="Setup.CustomActions\bin\$(var.BuildConfiguration)\Setup.CustomActions.CA.dll" />
-    <CustomAction Id="DetermineVsInstallPaths" Execute="firstSequence" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />
+    <CustomAction Id="DetermineVsInstallPaths" Execute="immediate" Return="ignore" BinaryKey="Setup.CustomActions.dll" DllEntry="DetermineVisualStudioInstalls" />
+    <!-- We need to set the exists proeprties since the property used in a directory assumes the parent directories' value if empty -->
+    <SetProperty Id="VSPRODUCTDIREXISTS_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]"></SetProperty>
+    <SetProperty Id="VSPRODUCTDIREXISTS_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]"></SetProperty>
+    <SetProperty Id="VSPRODUCTDIREXISTS_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]"></SetProperty>
 
-    <Condition Message="!(loc.VisualStudioRequired)">VSPRODUCTDIR_Community OR VSPRODUCTDIR_Professional OR VSPRODUCTDIR_Enterprise OR Installed</Condition>
+    <Condition Message="!(loc.VisualStudioRequired)">VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise OR Installed</Condition>
     
 		<!-- Only support per-machine installation. -->
 		<Property Id="ALLUSERS">1</Property>
