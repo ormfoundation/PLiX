@@ -16,5 +16,4 @@ Current Upgrade 2010 -> 2017
 
 	5) Added VSIXInstall based off the NORMA one
 	6) Created a new Setup project for 2017 using WIX
-	
-	) Updated Copyright Notices to include The ORM Foundation.
+	7) Updated Copyright Notices to include The ORM Foundation.
