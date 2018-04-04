@@ -46,6 +46,10 @@
     <SetProperty Id="VSPRODUCTDIREXISTS_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]"></SetProperty>
     <SetProperty Id="VSPRODUCTDIREXISTS_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]"></SetProperty>
     <SetProperty Id="VSPRODUCTDIREXISTS_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]"></SetProperty>
+    <!-- Create devenv path for calling /setup at the end -->
+    <SetProperty Id="VSDEVENVPATH_Community" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Community]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Community</SetProperty>
+    <SetProperty Id="VSDEVENVPATH_Professional" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Professional]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Professional</SetProperty>
+    <SetProperty Id="VSDEVENVPATH_Enterprise" Sequence="both" After="DetermineVsInstallPaths" Value="[VSPRODUCTDIR_Enterprise]\Common7\IDE\devenv.exe">VSPRODUCTDIR_Enterprise</SetProperty>
 
     <Condition Message="!(loc.VisualStudioRequired)">VSPRODUCTDIREXISTS_Community OR VSPRODUCTDIREXISTS_Professional OR VSPRODUCTDIREXISTS_Enterprise OR Installed</Condition>
     
@@ -65,6 +69,11 @@
 
 		<Property Id="ADMINORADVERTISED">!(loc.AdminOrAdvertised)</Property>
 		<CustomAction Id="AdminOrAdvertisedCustomAction" Return="check" Error="[ADMINORADVERTISED]"/>
+    
+    <CustomAction Id="DevEnvSetupCustomAction_Community" Property="VSDEVENVPATH_Community" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+    <CustomAction Id="DevEnvSetupCustomAction_Professional" Property="VSDEVENVPATH_Professional" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/>
+    <CustomAction Id="DevEnvSetupCustomAction_Enterprise" Property="VSDEVENVPATH_Enterprise" ExeCommand="/setup" Return="ignore" Impersonate="no" Execute="commit"/> 
+    
 		<AdminExecuteSequence>
 			<Custom Before="CostInitialize" Action="AdminOrAdvertisedCustomAction"/>
 		</AdminExecuteSequence>
@@ -75,6 +84,9 @@
 		<InstallExecuteSequence>
       <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
 			<RemoveExistingProducts Before="InstallInitialize"/>
+      <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Community"/>
+      <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Professional"/>
+      <Custom Before="InstallFinalize" Action="DevEnvSetupCustomAction_Enterprise"/>
 		</InstallExecuteSequence>
     <InstallUISequence>
       <Custom Before="LaunchConditions" Action="DetermineVsInstallPaths"/>
