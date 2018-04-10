@@ -1,5 +1,3 @@
-Windows Registry Editor Version 5.00
-
 [$RootKey$\InstalledProducts\Neumont PLiX Code Generator]
 "Package"="{bc129a03-26c4-4667-8e12-96225b2d3cd2}"
 "UseRegNameAsSplashName"=dword:00000001
@@ -44,11 +42,11 @@ Windows Registry Editor Version 5.00
 // Register C# Generator
 [$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\NUPlixLoader]
 @="Neumont C# PLiX Loader"
-"CLSID" Value="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
+"CLSID"="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
 "GeneratesDesignTimeSource"=dword:00000001
 
 // Register VB Generator
 [$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\NUPlixLoader]
 @="Neumont VB PLiX Loader"
-"CLSID" Value="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
+"CLSID"="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
 "GeneratesDesignTimeSource"=dword:00000001
