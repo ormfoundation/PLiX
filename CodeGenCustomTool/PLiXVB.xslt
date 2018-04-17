@@ -1415,6 +1415,12 @@
 	</xsl:template>
 	<xsl:template match="plx:namespace">
 		<xsl:text>Namespace </xsl:text>
+    <xsl:if test="starts-with(@name, 'System')">
+      <xsl:text>Global.</xsl:text>
+    </xsl:if>
+    <xsl:if test="starts-with(@name, 'Microsoft')">
+      <xsl:text>Global.</xsl:text>
+    </xsl:if>
 		<xsl:value-of select="@name"/>
 	</xsl:template>
 	<xsl:template match="plx:namespace" mode="IndentInfo">
