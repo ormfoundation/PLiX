@@ -59,7 +59,7 @@
 				<Directory Id="NEUMONTCOMMONFILESDIR" Name="Neumont">
 					<Directory Id="PLIXCOMMONFILESDIR" Name="PLiX">
 						<Component Id="PLIXFormatterSettings" Guid="BA4A6AF1-F9B1-4EEA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
-							<File Id="PLIXSettings.xml" Name="PlxSetng.xml" Source="..\CodeGenCustomTool\PLiXSettings.xml"
+							<File Id="PLIXSettings.xml" Name="PLiXSettings.xml" Source="..\CodeGenCustomTool\PLiXSettings.xml"
 								KeyPath="yes"/>
 						</Component>
 						<Directory Id="PLIXSCHEMASDIR" Name="Schemas">

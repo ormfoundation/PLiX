@@ -40,13 +40,13 @@
 "CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
 
 // Register C# Generator
-[$RootKey$\Generators\{574FC912-F74F-4B4E-92C3-F695C208A2BB}\NUPlixLoader]
+[$RootKey$\Generators\{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}\NUPlixLoader]
 @="Neumont C# PLiX Loader"
 "CLSID"="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
 "GeneratesDesignTimeSource"=dword:00000001
 
 // Register VB Generator
-[$RootKey$\Generators\{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}\NUPlixLoader]
+[$RootKey$\Generators\{164B10B9-B200-11D0-8C61-00A0C91E29D5}\NUPlixLoader]
 @="Neumont VB PLiX Loader"
 "CLSID"="{12F1FC1E-20A6-4286-9C43-25209BBA5997}"
 "GeneratesDesignTimeSource"=dword:00000001
