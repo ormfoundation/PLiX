@@ -92,7 +92,7 @@ A quick note on the process of using the preview window is in order. You will of
 <li><strong>Run the code</strong> to verify that it actually works as expected. Once again, this seems obvious, but developers in a hurry to check their code in and themselves out are known to skip this critical step.</li>
 </ol>
 <h3 id="DebuggingTechniques">Debugging Techniques</h3>
-Visual Studio 2005 has an integrated XSLT debugger. Once you get used to a couple of quirks and learn patience on large files you will find that you can easily track issue from a failed NUPlixLoader generation back to root of the problem.<br /><br />
+Visual Studio has an integrated XSLT debugger. Once you get used to a couple of quirks and learn patience on large files you will find that you can easily track issue from a failed NUPlixLoader generation back to root of the problem.<br /><br />
 The actual PLiX XML that is formatted into your code is not saved to disk by NUPlixLoader. While other errors are possible (an uncompilable transform, for example), most errors working with PLiX come from generating a file that does not pass PLiX schema validation. You can easily regenerate the intermediate XML file as follows:
 <ol>
 <li>Open the transform file in a Visual Studio editor.</li>
