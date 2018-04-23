@@ -15,6 +15,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Deployment.WindowsInstaller;
 
 namespace Setup.CustomActions
@@ -80,7 +81,19 @@ namespace Setup.CustomActions
         /// <returns></returns>
         private static string GetInstallPath(string product, Session session)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo(Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe"), $"-products {product} -property installationPath")
+            string path;
+
+            path = Environment.ExpandEnvironmentVariables(@"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe");
+            if (!File.Exists(path))
+            {
+                path = Environment.ExpandEnvironmentVariables(@"%ProgramFiles%\Microsoft Visual Studio\Installer\vswhere.exe");
+                if (!File.Exists(path))
+                {
+                    throw new Exception("Could not find vswhere.exe");
+                }
+            }
+
+            ProcessStartInfo startInfo = new ProcessStartInfo(path, $"-products {product} -property installationPath")
             {
                 CreateNoWindow = true,
                 RedirectStandardOutput = true,
