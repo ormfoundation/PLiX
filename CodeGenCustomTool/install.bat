@@ -83,8 +83,13 @@ IF "%TargetVisualStudioNumericVersion%"=="15.0" (
 	)
 )
 
-set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\bin\
-set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\Help\
+:: PRE VS 15
+REM set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\bin\
+REM set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\Help\
+:: VS 15
+set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2017\bin\
+set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2017\Help\
+
 set plixXML=%ResolvedCommonProgramFiles%\Neumont\PLiX\
 set plixTool=Neumont.Tools.CodeGeneration.PLiX
 set plixToolClass=Neumont.Tools.CodeGeneration.Plix.PlixLoaderCustomTool
@@ -188,3 +193,5 @@ SET ResolvedProgramFiles=%ProgramFiles(x86)%
 SET ResolvedCommonProgramFiles=%CommonProgramFiles(x86)%
 SET WOWRegistryAdjust=\Wow6432Node
 GOTO:EOF
+
+:_SetupPre2017

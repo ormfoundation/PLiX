@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>e7e52c77-9285-4057-b0ee-d115df221a4c</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>PLiX for Visual Studio</OutputName>
+    <OutputName>PLiX for Visual Studio 2017</OutputName>
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

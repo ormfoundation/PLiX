@@ -37,11 +37,15 @@
 	<?define VersionGuidSuffix="$(var.Debug)$(var.ExperimentalHive)$(var.Architecture)-010006020130"?>
 	-->
 	<?include ../Version.wxi?>
-	<?define PackageCode="12F1FC1E-0000-4286-$(var.VersionGuidSuffix)"?>
+  
+  <!-- The PackageCode needs to be different between the major releases (Pre VS 2017, VS 2017, etc.) -->
+  <?define PackageCodePrefix="42BAC5D1"?>  
+	<?define PackageCode="$(var.PackageCodePrefix)-0000-4286-$(var.VersionGuidSuffix)"?>
 	<!-- ProductCode should be changed for each MAJOR version. Specifically, the first and second hexits of the last section of the GUID should match the two digits of the major version.-->
-	<?define ProductCode="12F1FC1E-0000-4286-$(var.Debug)$(var.ExperimentalHive)$(var.Architecture)-$(var.MajorVersionHexits)0000000000"?>
+	<?define ProductCode="$(var.PackageCodePrefix)-0000-4286-$(var.Debug)$(var.ExperimentalHive)$(var.Architecture)-$(var.MajorVersionHexits)0000000000"?>
 	<!-- UpgradeCode should NOT be changed. -->
-	<?define UpgradeCode="12F1FC1E-0000-4286-0000-000000000000"?>
+	<?define UpgradeCode="$(var.PackageCodePrefix)-0000-4286-0000-000000000000"?>
+  
 	<!-- Public token for NORMA strong name key. -->
 	<?define PublicKeyToken="7a0c83ac6f8a469f"?>
 	<!-- GUID for NORMA Visual Studio Package (NOT MSI package!) -->
@@ -66,11 +70,11 @@
 	<?else?>
 		<?define BuildConfiguration="Release"?>
 	<?endif?>
-	<?define PLIXRegRoot="SOFTWARE\Neumont\PLiX for Visual Studio"?>
+	<?define PLIXRegRoot="SOFTWARE\Neumont\PLiX for Visual Studio 2017"?>
 	<?define PLIXSchemaVersion="4"?>
 	<!-- The default target directory for installation (under ProgramFilesFolder). -->
 	<!-- NOTE: This is intentionally not being localized, so that the installation location is constant. -->
 	<?define DefaultCompanyDir="Neumont"?>
 	<?define DefaultShortProductDir="PLiXVS"?>
-	<?define DefaultProductDir="PLiX for Visual Studio"?>
+	<?define DefaultProductDir="PLiX for Visual Studio 2017"?>
 </Include>

@@ -6,7 +6,7 @@
 @="PlixPackage"
 "InprocServer32"="$WinDir$\SYSTEM32\MSCOREE.DLL"
 "Class"="Neumont.Tools.CodeGeneration.Plix.Shell.PlixPackage"
-"CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
+"CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio 2017\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
 "ProductName"="Neumont PLiX Tools for Visual Studio"
 "CompanyName"="Neumont University"
 [$RootKey$\Packages\{bc129a03-26c4-4667-8e12-96225b2d3cd2}]
@@ -37,7 +37,7 @@
 "ThreadingModel"="Both"
 "Class"="Neumont.Tools.CodeGeneration.Plix.PlixLoaderCustomTool"
 "Assembly"="Neumont.Tools.CodeGeneration.PLiX, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7a0c83ac6f8a469f"
-"CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
+"CodeBase"="$ProgramFiles$\Neumont\PLiX for Visual Studio 2017\bin\Neumont.Tools.CodeGeneration.PLiX.dll"
 
 // Register C# Generator
 [$RootKey$\Generators\{FAE04EC1-301F-11d3-BF4B-00C04F79EFBC}\NUPlixLoader]
