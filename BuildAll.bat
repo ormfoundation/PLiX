@@ -21,6 +21,7 @@ REM MSBuild.exe /nologo "%RootDir%\PLiXReflector.sln" %*
 REM MSBuild.exe /nologo "%RootDir%\Setup\Setup.sln" %*
 
 :: VS 15.0
+IF NOT DEFINED TargetFrameworkVersion (SET TargetFrameworkVersion=v4.6)
 MSBuild.exe /nologo "%RootDir%\CodeGen.sln" %* /toolsversion:15.0
 REM MSBuild.exe /nologo "%RootDir%\PLiXReflector.sln" %* /toolsversion:15.0
 MSBuild.exe /nologo "%RootDir%\Setup.2017\Setup.sln" %* /toolsversion:15.0
