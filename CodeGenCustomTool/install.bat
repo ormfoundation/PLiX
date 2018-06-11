@@ -43,9 +43,12 @@ SET VSWhereLocation=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswher
 FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
+	SET VSInstanceId=%%i
+)
 SET VSIPDir=%VSInstallDir%\VSSDK\
 SET vsipbin=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\
-SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\15.0_3ebc2e4bExp\Extensions\ORM Solutions\PLiX\1.0
+SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\15.0_%VSInstanceId%Exp\Extensions\ORM Solutions\PLiX\1.0
 
 :: Make sure assemblies are in the gac
 IF "%TargetVisualStudioNumericVersion%"=="15.0" (
