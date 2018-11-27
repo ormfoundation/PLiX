@@ -30,7 +30,11 @@ if '%2'=='' (
 )
 REM set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio 8\
 :: Can't use '(' due to the x86 in program files...
-if '%3'=='' set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\2017\Community\ else set envPath=%~3
+if '%3'=='' (
+	set "envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\2017\Community\"
+) else (
+	set "envPath=%~3"
+)
 
 SET VSRegistryRootBase=SOFTWARE%WOWRegistryAdjust%\Microsoft\VisualStudio
 SET VSRegistryRootVersion=%TargetVisualStudioNumericVersion%
@@ -49,42 +53,27 @@ FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -req
 SET VSIPDir=%VSInstallDir%\VSSDK\
 SET vsipbin=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\
 SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\15.0_%VSInstanceId%Exp\Extensions\ORM Solutions\PLiX\1.0
-
-:: Make sure assemblies are in the gac
-IF "%TargetVisualStudioNumericVersion%"=="15.0" (
-	gacutil.exe /l "Microsoft.VisualStudio.Shell.Framework, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Framework.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.OLE.Interop.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Interop.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.Shell.Interop.8.0, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Interop.8.0.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.Shell.Interop.9.0, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.Shell.Interop.9.0.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.Shell.15.0, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSIPDir%VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Shell.15.0.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.TextManager.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSInstallDir%\Common7\IDE\PublicAssemblies\Microsoft.VisualStudio.TextManager.Interop.dll"
-	)
-	gacutil.exe /l "Microsoft.VisualStudio.Utilities, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" | findstr /c:"Number of items = 0"
-	IF NOT ERRORLEVEL 1 (
-		gacutil.exe /nologo /f /i "%VSIPDir%VisualStudioIntegration\Common\Assemblies\v4.0\Microsoft.VisualStudio.Utilities.dll"
-	)
+:: Update the path for dlls needed by the build, we don't want to add them to the GAC
+for %%i in (Microsoft.VisualStudio.Shell.15.0.dll) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\Common7\IDE\PublicAssemblies"
 )
+SET INPATH=
+for %%i in (Microsoft.VisualStudio.Utilities.dll) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0"
+)
+SET INPATH=
+for %%i in (Microsoft.Build.Framework.dll) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\MSBuild\15.0\Bin"
+)
+SET INPATH=
+for %%i in (vsct.exe) do (set INPATH=%%~s$PATH:i)
+if '%INPATH%'=='' (
+	CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin"
+)
+SET INPATH=
 
 :: PRE VS 15
 REM set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\bin\
@@ -97,10 +86,11 @@ set plixXML=%ResolvedCommonProgramFiles%\Neumont\PLiX\
 set plixTool=Neumont.Tools.CodeGeneration.PLiX
 set plixToolClass=Neumont.Tools.CodeGeneration.Plix.PlixLoaderCustomTool
 
-IF EXIST "%plixBinaries%%plixTool%.dll" (
-"%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%" /unregister "%plixBinaries%%plixTool%.dll"
-"%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%Exp" /unregister "%plixBinaries%%plixTool%.dll"
-)
+:: PRE VS 15
+REM IF EXIST "%plixBinaries%%plixTool%.dll" (
+REM "%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%" /unregister "%plixBinaries%%plixTool%.dll"
+REM "%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%Exp" /unregister "%plixBinaries%%plixTool%.dll"
+REM )
 
 :: Clean old install locations
 if exist "%envPath%Common7\IDE\PrivateAssemblies\Neumont.Tools.CodeGeneration.CustomTools.dll" (
@@ -152,8 +142,9 @@ xcopy /Y /D /Q "%rootPath%%outDir%PlixJSL.xslt" "%plixXML%Formatters"
 xcopy /Y /D /Q "%rootPath%%outDir%PlixPY.xslt" "%plixXML%Formatters"
 ECHO F | xcopy /Y /D /Q "%rootPath%..\Setup\PLiXSchemaCatalog.xml" "%envPath%Xml\Schemas"
 
-"%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%" /codebase "%plixBinaries%%plixTool%.dll"
-"%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%Exp" /codebase "%plixBinaries%%plixTool%.dll"
+:: PRE VS 15
+REM "%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%" /codebase "%plixBinaries%%plixTool%.dll"
+REM "%vsipbin%regpkg.exe" /root:"%VSRegistryRootBase%\%VSRegistryRootVersion%Exp" /codebase "%plixBinaries%%plixTool%.dll"
 
 CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%"
 CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%Exp"
@@ -197,4 +188,6 @@ SET ResolvedCommonProgramFiles=%CommonProgramFiles(x86)%
 SET WOWRegistryAdjust=\Wow6432Node
 GOTO:EOF
 
-:_SetupPre2017
+:EXTENDPATH
+SET PATH=%PATH%;%~1
+GOTO:EOF
