@@ -156,7 +156,15 @@ IF "%TargetVisualStudioNumericVersion%"=="15.0" (
 	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\PLiX.pkgdef" "%VSIXInstallDir%\"
 	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\Package.ico" "%VSIXInstallDir%\"
 	XCOPY /Y /D /V /Q "%rootPath%..\LICENSE.txt" "%VSIXInstallDir%\"
-	REG ADD HKLM\%VSRegistryRootBase%\%VSRegistryRootVersion%Exp\ExtensionManager\EnabledExtensions /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
+	:: PRE VS 15
+	REM REG ADD HKLM\%VSRegistryRootBase%\%VSRegistryRootVersion%Exp\ExtensionManager\EnabledExtensions /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
+	:: VS 15
+	:: https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
+	for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\15.0_*Exp) do (
+		reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin"
+		REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
+		reg unload HKLM\_TMPVS_%%~nxf
+	)
 )
 GOTO:EOF
 
