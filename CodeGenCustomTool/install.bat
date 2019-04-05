@@ -6,8 +6,9 @@ setlocal
 ::   9.0 = Visual Studio 2008 (Code Name "Orcas")
 ::   10.0 = Visual Studio 2010 (Code Name "Rosario")
 ::   15.0 = Visual Studio 2017
+::   16.0 = Visual Studio 2019
 IF NOT DEFINED TargetVisualStudioNumericVersion (
-	SET TargetVisualStudioNumericVersion=15.0
+	SET TargetVisualStudioNumericVersion=16.0
 )
 
 IF "%ProgramFiles(X86)%"=="" (
@@ -31,7 +32,7 @@ if '%2'=='' (
 REM set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio 8\
 :: Can't use '(' due to the x86 in program files...
 if '%3'=='' (
-	set "envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\2017\Community\"
+	set "envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\2019\Community\"
 ) else (
 	set "envPath=%~3"
 )
@@ -42,7 +43,7 @@ SET VSRegistryRootVersion=%TargetVisualStudioNumericVersion%
 :: PRE VS 15
 REM FOR /F "usebackq skip=2 tokens=2*" %%A IN (`REG QUERY "HKLM\%VSRegistryRootBase%\VSIP\%VSRegistryRootVersion%" /v "InstallDir"`) DO SET VSIPDir=%%~fB
 REM IF "%TargetVisualStudioNumericVersion%"=="9.0" (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\VS2005\) ELSE (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\)
-:: VS 15
+:: VS 15 and up
 SET VSWhereLocation=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe
 FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
@@ -54,22 +55,22 @@ SET VSIPDir=%VSInstallDir%\VSSDK\
 SET vsipbin=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\
 SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\15.0_%VSInstanceId%Exp\Extensions\ORM Solutions\PLiX\1.0
 :: Update the path for dlls needed by the build, we don't want to add them to the GAC
-for %%i in (Microsoft.VisualStudio.Shell.15.0.dll) do (set INPATH=%%~s$PATH:i)
+for %%i in (Microsoft.VisualStudio.Shell.15.0.dll) do (set INPATH="%%~$PATH:i")
 if '%INPATH%'=='' (
 	CALL:EXTENDPATH "%VSInstallDir%\Common7\IDE\PublicAssemblies"
 )
 SET INPATH=
-for %%i in (Microsoft.VisualStudio.Utilities.dll) do (set INPATH=%%~s$PATH:i)
+for %%i in (Microsoft.VisualStudio.Utilities.dll) do (set INPATH="%%~$PATH:i")
 if '%INPATH%'=='' (
 	CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Common\Assemblies\v4.0"
 )
 SET INPATH=
-for %%i in (Microsoft.Build.Framework.dll) do (set INPATH=%%~s$PATH:i)
+for %%i in (Microsoft.Build.Framework.dll) do (set INPATH="%%~$PATH:i")
 if '%INPATH%'=='' (
 	CALL:EXTENDPATH "%VSInstallDir%\MSBuild\15.0\Bin"
 )
 SET INPATH=
-for %%i in (vsct.exe) do (set INPATH=%%~s$PATH:i)
+for %%i in (vsct.exe) do (set INPATH="%%~$PATH:i")
 if '%INPATH%'=='' (
 	CALL:EXTENDPATH "%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin"
 )
@@ -78,9 +79,9 @@ SET INPATH=
 :: PRE VS 15
 REM set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\bin\
 REM set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\Help\
-:: VS 15
-set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2017\bin\
-set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2017\Help\
+:: VS 15+
+set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2019\bin\
+set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2019\Help\
 
 set plixXML=%ResolvedCommonProgramFiles%\Neumont\PLiX\
 set plixTool=Neumont.Tools.CodeGeneration.PLiX
@@ -150,7 +151,7 @@ CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%"
 CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%Exp"
 
 :: Install the extension
-IF "%TargetVisualStudioNumericVersion%"=="15.0" (
+IF %TargetVisualStudioNumericVersion% GEQ 15.0 (
 	IF NOT EXIST "%VSIXInstallDir%" (MKDIR "%VSIXInstallDir%")
 	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\extension.vsixmanifest" "%VSIXInstallDir%\"
 	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\PLiX.pkgdef" "%VSIXInstallDir%\"
@@ -158,9 +159,9 @@ IF "%TargetVisualStudioNumericVersion%"=="15.0" (
 	XCOPY /Y /D /V /Q "%rootPath%..\LICENSE.txt" "%VSIXInstallDir%\"
 	:: PRE VS 15
 	REM REG ADD HKLM\%VSRegistryRootBase%\%VSRegistryRootVersion%Exp\ExtensionManager\EnabledExtensions /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
-	:: VS 15
-	:: https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
-	for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\15.0_*Exp) do (
+	:: VS 15+
+	REM https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
+	for /d %%f in (%LOCALAPPDATA%\Microsoft\VisualStudio\16.0_*Exp) do (
 		reg load HKLM\_TMPVS_%%~nxf "%%f\privateregistry.bin"
 		REG ADD "HKLM\_TMPVS_%%~nxf\Software\Microsoft\VisualStudio\%%~nxf\ExtensionManager\EnabledExtensions" /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
 		reg unload HKLM\_TMPVS_%%~nxf

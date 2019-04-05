@@ -4,7 +4,8 @@ setlocal
 ::   8.0 = Visual Studio 2005 (Code Name "Whidbey")
 ::   9.0 = Visual Studio 2008 (Code Name "Orcas")
 ::   15.0 = Visual Studio 2017
-SET TargetVisualStudioNumericVersion=15.0
+::   16.0 = Visual Studio 2019
+SET TargetVisualStudioNumericVersion=16.0
 
 :: CTC - Compiled by CTC
 :: VSCT - Compiled by VSCT
