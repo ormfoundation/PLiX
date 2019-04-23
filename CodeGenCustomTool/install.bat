@@ -53,7 +53,7 @@ FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -req
 )
 SET VSIPDir=%VSInstallDir%\VSSDK\
 SET vsipbin=%VSInstallDir%\VSSDK\VisualStudioIntegration\Tools\Bin\
-SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\15.0_%VSInstanceId%Exp\Extensions\ORM Solutions\PLiX\1.0
+SET VSIXInstallDir=%LocalAppData%\Microsoft\VisualStudio\%TargetVisualStudioNumericVersion%_%VSInstanceId%Exp\Extensions\ORM Solutions\PLiX\1.0
 :: Update the path for dlls needed by the build, we don't want to add them to the GAC
 for %%i in (Microsoft.VisualStudio.Shell.15.0.dll) do (set INPATH="%%~$PATH:i")
 if '%INPATH%'=='' (
