@@ -11,12 +11,13 @@ Current Upgrade 2017 -> 2019
 	2) Update CodeGenCustomTool\CtcCommponents\UpdateCTO.bat for VS 2019
 	3) Update CodeGenCustomTool\CodeGenCustomTool.csproj references
 	4) Update CodeGenCustomTool\Install.bat for VS 2019
-	5) Update VSIXInstal\extension.vsixmanifest for VS 2019
-	6) Update VSIXInstall\Readme.txt to be version independent
-	7) Update Setup.2017+\Components.wxs for VS 2019
-	8) Update Setup.2017+\Config.wxi for VS 2019
-	9) Update Setup.2017+\settings.ini for VS 2019
-	10) Update Setup.2017+\Strings.wxi for VS 2019
+	5) Update VSIXInstall\extension.vsixmanifest for VS 2019
+	6) Update VSIXInstall\PLiX.pkgdef for VS 2019
+	7) Update VSIXInstall\Readme.txt to be version independent
+	8) Update Setup.2017+\Components.wxs for VS 2019
+	9) Update Setup.2017+\Config.wxi for VS 2019
+	10) Update Setup.2017+\settings.ini for VS 2019
+	11) Update Setup.2017+\Strings.wxi for VS 2019
 	
 Upgrade 2010 -> 2017
 	1) Update BuildAll.bat for VS 2017
