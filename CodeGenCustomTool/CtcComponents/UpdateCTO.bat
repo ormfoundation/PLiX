@@ -1,11 +1,9 @@
 @echo off
 setlocal
-:: TargetVisualStudioNumericVersion settings:
-::   8.0 = Visual Studio 2005 (Code Name "Whidbey")
-::   9.0 = Visual Studio 2008 (Code Name "Orcas")
-::   15.0 = Visual Studio 2017
-::   16.0 = Visual Studio 2019
-SET TargetVisualStudioNumericVersion=16.0
+IF NOT DEFINED TargetVisualStudioNumericVersion (
+	ECHO TargetVisualStudioNumericVersion not defined.
+	EXIT /B 1
+)
 
 :: CTC - Compiled by CTC
 :: VSCT - Compiled by VSCT
@@ -34,7 +32,7 @@ GOTO:EOF
 :CompileVSCT
 :: Find the VS Install Directory
 SET VSWhereLocation=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe
-FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -version [%TargetVisualStudioNumericVersion%^,%TargetVisualStudioNumericNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
 SET VSIPDir=%VSInstallDir%\VSSDK\

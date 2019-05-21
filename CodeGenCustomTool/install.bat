@@ -1,14 +1,9 @@
 @echo off
 setlocal
 
-:: TargetVisualStudioNumericVersion settings:
-::   8.0 = Visual Studio 2005 (Code Name "Whidbey")
-::   9.0 = Visual Studio 2008 (Code Name "Orcas")
-::   10.0 = Visual Studio 2010 (Code Name "Rosario")
-::   15.0 = Visual Studio 2017
-::   16.0 = Visual Studio 2019
 IF NOT DEFINED TargetVisualStudioNumericVersion (
-	SET TargetVisualStudioNumericVersion=16.0
+	ECHO TargetVisualStudioNumericVersion not defined.
+	EXIT /B 1
 )
 
 IF "%ProgramFiles(X86)%"=="" (
@@ -32,7 +27,7 @@ if '%2'=='' (
 REM set envPath=%ResolvedProgramFiles%\Microsoft Visual Studio 8\
 :: Can't use '(' due to the x86 in program files...
 if '%3'=='' (
-	set "envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\2019\Community\"
+	set "envPath=%ResolvedProgramFiles%\Microsoft Visual Studio\%VSYear%\Community\"
 ) else (
 	set "envPath=%~3"
 )
@@ -45,10 +40,10 @@ REM FOR /F "usebackq skip=2 tokens=2*" %%A IN (`REG QUERY "HKLM\%VSRegistryRootB
 REM IF "%TargetVisualStudioNumericVersion%"=="9.0" (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\VS2005\) ELSE (SET vsipbin=%VSIPDir%VisualStudioIntegration\Tools\Bin\)
 :: VS 15 and up
 SET VSWhereLocation=%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe
-FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -version [%TargetVisualStudioNumericVersion%^,%TargetVisualStudioNumericNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property installationPath`) DO (
 	SET VSInstallDir=%%i
 )
-FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -latest -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
+FOR /f "usebackq tokens=*" %%i IN (`"%VSWhereLocation%" -version [%TargetVisualStudioNumericVersion%^,%TargetVisualStudioNumericNextVersion%^) -products * -requires Microsoft.Component.MSBuild -property instanceId`) DO (
 	SET VSInstanceId=%%i
 )
 SET VSIPDir=%VSInstallDir%\VSSDK\
@@ -67,7 +62,7 @@ if '%INPATH%'=='' (
 SET INPATH=
 for %%i in (Microsoft.Build.Framework.dll) do (set INPATH="%%~$PATH:i")
 if '%INPATH%'=='' (
-	CALL:EXTENDPATH "%VSInstallDir%\MSBuild\15.0\Bin"
+	CALL:EXTENDPATH "%VSInstallDir%\MSBuild\%ProjectToolsVersion%\Bin"
 )
 SET INPATH=
 for %%i in (vsct.exe) do (set INPATH="%%~$PATH:i")
@@ -80,8 +75,8 @@ SET INPATH=
 REM set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\bin\
 REM set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio\Help\
 :: VS 15+
-set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2019\bin\
-set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio 2019\Help\
+set plixBinaries=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio %VSYear%\bin\
+set plixHelp=%ResolvedProgramFiles%\Neumont\PLiX for Visual Studio %VSYear%\Help\
 
 set plixXML=%ResolvedCommonProgramFiles%\Neumont\PLiX\
 set plixTool=Neumont.Tools.CodeGeneration.PLiX
@@ -153,9 +148,9 @@ CALL:_InstallCustomTool "%TargetVisualStudioNumericVersion%Exp"
 :: Install the extension
 IF %TargetVisualStudioNumericVersion% GEQ 15.0 (
 	IF NOT EXIST "%VSIXInstallDir%" (MKDIR "%VSIXInstallDir%")
-	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\extension.vsixmanifest" "%VSIXInstallDir%\"
-	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\PLiX.pkgdef" "%VSIXInstallDir%\"
-	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\Package.ico" "%VSIXInstallDir%\"
+	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\%VSShortVersion%\extension.vsixmanifest" "%VSIXInstallDir%\"
+	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\%VSShortVersion%\PLiX.pkgdef" "%VSIXInstallDir%\"
+	XCOPY /Y /D /V /Q "%rootPath%..\VSIXInstall\%VSShortVersion%\Package.ico" "%VSIXInstallDir%\"
 	XCOPY /Y /D /V /Q "%rootPath%..\LICENSE.txt" "%VSIXInstallDir%\"
 	:: PRE VS 15
 	REM REG ADD HKLM\%VSRegistryRootBase%\%VSRegistryRootVersion%Exp\ExtensionManager\EnabledExtensions /v "bc129a03-26c4-4667-8e12-96225b2d3cd2,1.0.0" /d "%VSIXInstallDir%\\" /f 1>NUL
