@@ -39,10 +39,11 @@
 	<?include ../Version.wxi?>
   
   <!-- The PackageCode needs to be different between the major releases (Pre VS 2017, VS 2017, etc.) -->
-  <!-- VS2017 -->
-  <!--<?define PackageCodePrefix="42BAC5D1"?>-->
-  <!-- VS2019 -->
-  <?define PackageCodePrefix="FF0B4399"?>
+  <?if $(var.VSYear)=2017?>
+    <?define PackageCodePrefix="42BAC5D1"?>
+  <?elseif $(var.VSYear)=2019?>
+    <?define PackageCodePrefix="FF0B4399"?>
+  <?endif?>  
   
 	<?define PackageCode="$(var.PackageCodePrefix)-0000-4286-$(var.VersionGuidSuffix)"?>
 	<!-- ProductCode should be changed for each MAJOR version. Specifically, the first and second hexits of the last section of the GUID should match the two digits of the major version.-->
@@ -74,11 +75,11 @@
 	<?else?>
 		<?define BuildConfiguration="Release"?>
 	<?endif?>
-	<?define PLIXRegRoot="SOFTWARE\Neumont\PLiX for Visual Studio 2019"?>
+	<?define PLIXRegRoot="SOFTWARE\Neumont\PLiX for Visual Studio $(var.VSYear)"?>
 	<?define PLIXSchemaVersion="4"?>
 	<!-- The default target directory for installation (under ProgramFilesFolder). -->
 	<!-- NOTE: This is intentionally not being localized, so that the installation location is constant. -->
 	<?define DefaultCompanyDir="Neumont"?>
 	<?define DefaultShortProductDir="PLiXVS"?>
-	<?define DefaultProductDir="PLiX for Visual Studio 2019"?>
+	<?define DefaultProductDir="PLiX for Visual Studio $(var.VSYear)"?>
 </Include>

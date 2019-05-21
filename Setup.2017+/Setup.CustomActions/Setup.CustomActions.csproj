@@ -51,4 +51,17 @@
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixCATargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
+  <!--Setup Symbols-->
+  <Choose>
+    <When Condition=" '$(TargetVisualStudioNumericVersion)' == '15.0' ">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);VISUALSTUDIO_15_0</DefineConstants>
+      </PropertyGroup>
+    </When>
+    <When Condition=" '$(TargetVisualStudioNumericVersion)' == '16.0' ">
+      <PropertyGroup>
+        <DefineConstants>$(DefineConstants);VISUALSTUDIO_16_0</DefineConstants>
+      </PropertyGroup>
+    </When>
+  </Choose>
 </Project>

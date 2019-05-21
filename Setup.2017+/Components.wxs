@@ -112,15 +112,15 @@
           <Directory Id="VSIDE_Community" Name="IDE">
             <Directory Id="VSEXTENSIONSDIR_Community" Name="Extensions">
               <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Community" Name="Neumont">
-                <Directory Id="NORMAEXTENSIONSDIR_Community" Name="PLiX for Visual Studio 2019">
+                <Directory Id="NORMAEXTENSIONSDIR_Community" Name="PLiX for Visual Studio $(var.VSYear)">
                   <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Community" Name="$(var.MajorMinorVersion)">
                     <Component Id="VSIXExtensionComponent_Community" Guid="E370803B-61FE-453C-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
                       <Condition>VSPRODUCTDIREXISTS_Community</Condition>
-                      <File Id="VSIXManifest_Community" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\extension.vsixmanifest"
+                      <File Id="VSIXManifest_Community" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\$(var.VSShortVersion)\extension.vsixmanifest"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="PackageDef_Community" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
+                      <File Id="PackageDef_Community" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\$(var.VSShortVersion)\PLiX.pkgdef"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="VSIXIcon_Community" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\Package.ico"
+                      <File Id="VSIXIcon_Community" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\$(var.VSShortVersion)\Package.ico"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
                       <File Id="VSIXLicense_Community" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
@@ -148,15 +148,15 @@
           <Directory Id="VSIDE_Professional" Name="IDE">
             <Directory Id="VSEXTENSIONSDIR_Professional" Name="Extensions">
               <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Professional" Name="Neumont">
-                <Directory Id="NORMAEXTENSIONSDIR_Professional" Name="PLiX for Visual Studio 2019">
+                <Directory Id="NORMAEXTENSIONSDIR_Professional" Name="PLiX for Visual Studio $(var.VSYear)">
                   <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Professional" Name="$(var.MajorMinorVersion)">
                     <Component Id="VSIXExtensionComponent_Professional" Guid="BA21CD30-1127-42CA-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
                       <Condition>VSPRODUCTDIREXISTS_Professional</Condition>
-                      <File Id="VSIXManifest_Professional" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\extension.vsixmanifest"
+                      <File Id="VSIXManifest_Professional" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\$(var.VSShortVersion)\extension.vsixmanifest"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="PackageDef_Professional" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
+                      <File Id="PackageDef_Professional" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\$(var.VSShortVersion)\PLiX.pkgdef"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="VSIXIcon_Professional" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\Package.ico"
+                      <File Id="VSIXIcon_Professional" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\$(var.VSShortVersion)\Package.ico"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
                       <File Id="VSIXLicense_Professional" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
@@ -184,15 +184,15 @@
           <Directory Id="VSIDE_Enterprise" Name="IDE">
             <Directory Id="VSEXTENSIONSDIR_Enterprise" Name="Extensions">
               <Directory Id="ORMSOLUTIONSEXTENSIONSDIR_Enterprise" Name="Neumont">
-                <Directory Id="NORMAEXTENSIONSDIR_Enterprise" Name="PLiX for Visual Studio 2019">
+                <Directory Id="NORMAEXTENSIONSDIR_Enterprise" Name="PLiX for Visual Studio $(var.VSYear)">
                   <Directory Id="NORMAVERSIONEDEXTENSIONSDIR_Enterprise" Name="$(var.MajorMinorVersion)">
                     <Component Id="VSIXExtensionComponent_Enterprise" Guid="2BED8F0E-4752-4A49-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
                       <Condition>VSPRODUCTDIREXISTS_Enterprise</Condition>
-                      <File Id="VSIXManifest_Enterprise" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\extension.vsixmanifest"
+                      <File Id="VSIXManifest_Enterprise" ShortName="extend.fst" Name="extension.vsixmanifest" Source="..\VSIXInstall\$(var.VSShortVersion)\extension.vsixmanifest"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="PackageDef_Enterprise" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\PLiX.pkgdef"
+                      <File Id="PackageDef_Enterprise" ShortName="Designer.def" Name="PLiX.pkgdef" Source="..\VSIXInstall\$(var.VSShortVersion)\PLiX.pkgdef"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-                      <File Id="VSIXIcon_Enterprise" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\Package.ico"
+                      <File Id="VSIXIcon_Enterprise" ShortName="DsgnrIco.png" Name="Package.ico" Source="..\VSIXInstall\$(var.VSShortVersion)\Package.ico"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
                       <File Id="VSIXLicense_Enterprise" ShortName="LICENSE.txt" Name="LICENSE.txt" Source="..\LICENSE.txt"
                         DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>

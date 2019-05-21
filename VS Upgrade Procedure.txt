@@ -6,7 +6,8 @@ Project Build Order
 		Reflector\PLiXReflector.csproj
 	Setup\Setup.sln
 
-Current Upgrade 2017 -> 2019
+Current Upgrade 2017 -> 2019 * When updating the build process to work with multiple version of VS installed some of the below will no longer need to be done
+	* Create VS2019.bat
 	* Update BuildAll.bat for VS 2019
 	* Update CodeGenCustomTool\CtcCommponents\UpdateCTO.bat for VS 2019
 	* Update CodeGenCustomTool\CodeGenCustomTool.csproj references
@@ -14,6 +15,8 @@ Current Upgrade 2017 -> 2019
 	* Update VSIXInstall\extension.vsixmanifest for VS 2019
 	* Update VSIXInstall\PLiX.pkgdef for VS 2019
 	* Update VSIXInstall\Readme.txt to be version independent
+	* Update Setup.2017+\Setup.CustomActions\Setup.CustomActions.csproj for VS 2019; defining constants at the bottom
+	* Update Setup.2017+\Setup.CustomActions\CustomAction.cs for VS 2019 ~ Line 96
 	* Update Setup.2017+\Components.wxs for VS 2019
 	* Update Setup.2017+\Config.wxi for VS 2019
 	* Update Setup.2017+\settings.ini for VS 2019
