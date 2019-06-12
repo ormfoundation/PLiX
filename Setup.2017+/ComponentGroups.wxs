@@ -32,6 +32,9 @@
 		<ComponentGroup Id="CustomToolComponents">
 			<!-- VS integration pieces go here -->
 			<ComponentRef Id="CustomToolComponent"/>
+      <?ifdef IsDebug?>
+        <ComponentRef Id="CustomToolComponentPDB"/>
+      <?endif?>
 		</ComponentGroup>
 		<ComponentGroup Id="PackageComponents">
       <ComponentRef Id="VSIXExtensionComponent_Community"/>

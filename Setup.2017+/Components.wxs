@@ -35,14 +35,18 @@
 							<Component Id="CustomToolComponent" Guid="23DAD9F0-CEC3-432B-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
 								<File Id="Neumont.Tools.CodeGeneration.PLiX.dll" Name="Neumont.Tools.CodeGeneration.PLiX.dll" Source="..\CodeGenCustomTool\bin\$(var.BuildConfiguration)\Neumont.Tools.CodeGeneration.PLiX.dll"
 									DefaultVersion="$(var.ProductVersion)" DefaultLanguage="0" KeyPath="yes" Vital="yes" Assembly=".net" AssemblyManifest="Neumont.Tools.CodeGeneration.PLiX.dll" ProcessorArchitecture="msil" AssemblyApplication="Neumont.Tools.CodeGeneration.PLiX.dll"/>
-								<File Id="Neumont.Tools.CodeGeneration.PLiX.pdb" Name="Neumont.Tools.CodeGeneration.PLiX.pdb" Source="..\CodeGenCustomTool\bin\$(var.BuildConfiguration)\Neumont.Tools.CodeGeneration.PLiX.pdb"
-									DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
 								<RegistryKey ForceCreateOnInstall="yes" Root="HKLM" Key="$(var.PLIXRegRoot)">
 									<RegistryValue Type="string" Name="InstallDir" Value="[$(var.DefaultShortProductDir)]"/>
 									<RegistryValue Type="string" Name="ProductVersion" Value="$(var.ProductVersion)"/>
 									<RegistryValue Type="string" Name="SchemaVersion" Value="$(var.PLIXSchemaVersion)"/>
 								</RegistryKey>
 							</Component>
+              <?ifdef IsDebug?>
+                <Component Id="CustomToolComponentPDB" Guid="B39D5EE2-76B7-4187-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
+                  <File Id="Neumont.Tools.CodeGeneration.PLiX.pdb" Name="Neumont.Tools.CodeGeneration.PLiX.pdb" Source="..\CodeGenCustomTool\bin\$(var.BuildConfiguration)\Neumont.Tools.CodeGeneration.PLiX.pdb"
+									  DefaultLanguage="0" CompanionFile="Neumont.Tools.CodeGeneration.PLiX.dll"/>
+                </Component>
+              <?endif?>
 						</Directory>
 						<Directory Id="HELPDIR" Name="Help">
 							<Component Id="HTMLSchemaFilesComponent" Guid="5AA0F7DD-44DB-471F-$(var.VersionGuidSuffix)" DiskId="1" Win64="$(var.Win64)">
