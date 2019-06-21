@@ -918,7 +918,8 @@ namespace Neumont.Tools.CodeGeneration.Plix.Shell
 				string docComment = nameTable.Add("docComment");
 				XmlReaderSettings readerSettings = new XmlReaderSettings();
 				readerSettings.NameTable = nameTable;
-				readerSettings.ProhibitDtd = false;
+                //readerSettings.ProhibitDtd = false;
+                readerSettings.DtdProcessing = DtdProcessing.Prohibit;
 				readerSettings.IgnoreWhitespace = false;
 				readerSettings.CheckCharacters = false;
 				readerSettings.ValidationType = ValidationType.None;

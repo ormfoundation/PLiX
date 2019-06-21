@@ -49,12 +49,12 @@ namespace Neumont.Tools.CodeGeneration.Plix.Shell
 	[DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\8.0Exp")]
 	// This attribute is used to register the informations needed to show the this package
 	// in the Help/About dialog of Visual Studio.
-	[InstalledProductRegistration(true, null, null, null, LanguageIndependentName = "Neumont PLiX Code Generator")]
-	// In order be loaded inside Visual Studio in a machine that has not the VS SDK installed, 
-	// package needs to have a valid load key (it can be requested at 
-	// http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
-	// package has a load key embedded in its resources.
-	[ProvideLoadKey("Standard", "1.0", "Neumont PLiX Tools for Visual Studio", "Neumont University", 150)]
+	[InstalledProductRegistration(null, null, null, LanguageIndependentName = "Neumont PLiX Code Generator")]
+    // In order be loaded inside Visual Studio in a machine that has not the VS SDK installed, 
+    // package needs to have a valid load key (it can be requested at 
+    // http://msdn.microsoft.com/vstudio/extend/). This attributes tells the shell that this 
+    // package has a load key embedded in its resources.
+    [ProvideLoadKey("Standard", "1.0", "Neumont PLiX Tools for Visual Studio", "Neumont University", 150)]
 	// This attribute is needed to let the shell know that this package exposes some menus.
 	[ProvideMenuResource(1000, 1)]
 	[Guid(GuidList.guidPlixPackagePkgString)]
