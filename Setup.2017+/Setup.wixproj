@@ -8,17 +8,17 @@
     <SchemaVersion>2.0</SchemaVersion>
     <OutputName>PLiX for Visual Studio $(VSYear)</OutputName>
     <OutputType>Package</OutputType>
+    <SuppressSpecificWarnings>1091</SuppressSpecificWarnings>
+    <SuppressIces>ICE03;ICE82;ICE30</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
     <DefineConstants>Debug</DefineConstants>
-    <SuppressIces>ICE03;ICE82;ICE30</SuppressIces>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
-    <SuppressIces>ICE03;ICE82;ICE30</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ComponentGroups.wxs" />
